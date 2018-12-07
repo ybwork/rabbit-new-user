@@ -11,7 +11,7 @@ channel.exchange_declare(
 )
 
 result = channel.queue_declare(
-    queue='inform_router',
+    queue='add_user_to_group',
     durable=True
 )
 
@@ -25,42 +25,7 @@ channel.queue_bind(
 
 
 def callback(channel, method, properties, body):
-    event_from_base_router = body.decode('utf-8')
-
-    if event_from_base_router == 'user_created':
-        exchange_name = 'inform'
-
-        channel.exchange_declare(
-            exchange=exchange_name,
-            exchange_type='topic'
-        )
-
-        event_for_inform_workers = 'informed_user_web'
-        channel.basic_publish(
-            exchange=exchange_name,
-            routing_key='inform.new_user.all',
-            body=event_for_inform_workers,
-            properties=pika.BasicProperties(
-                delivery_mode=2
-            )
-        )
-    elif event_from_base_router == 'user_accounts_created':
-        exchange_name = 'inform'
-
-        channel.exchange_declare(
-            exchange=exchange_name,
-            exchange_type='topic'
-        )
-
-        event_for_inform_workers = 'informed_all_about_user_in_system'
-        channel.basic_publish(
-            exchange=exchange_name,
-            routing_key='inform.user_in_system.all',
-            body=event_for_inform_workers,
-            properties=pika.BasicProperties(
-                delivery_mode=2
-            )
-        )
+    print('new user full register')
 
 
 channel.basic_consume(
@@ -70,4 +35,4 @@ channel.basic_consume(
 
 channel.start_consuming()
 
-# python inform_router.py
+# python add_user_to_group.py

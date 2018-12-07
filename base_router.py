@@ -76,22 +76,21 @@ def callback(channel, method, properties, body):
             )
         )
     elif executed_event == 'informed_all_about_user_in_system':
-        print(5)
-        # exchange_name = 'inform_router'
-        #
-        # channel.exchange_declare(
-        #     exchange=exchange_name,
-        #     exchange_type='direct'
-        # )
-        #
-        # channel.basic_publish(
-        #     exchange=exchange_name,
-        #     routing_key='inform_router',
-        #     body=executed_event,
-        #     properties=pika.BasicProperties(
-        #         delivery_mode=2
-        #     )
-        # )
+        exchange_name = 'add_user_to_group'
+
+        channel.exchange_declare(
+            exchange=exchange_name,
+            exchange_type='direct'
+        )
+
+        channel.basic_publish(
+            exchange=exchange_name,
+            routing_key='add_user_to_group',
+            body='',
+            properties=pika.BasicProperties(
+                delivery_mode=2
+            )
+        )
 
 
 channel.basic_consume(

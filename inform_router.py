@@ -10,10 +10,10 @@ channel.exchange_declare(
     exchange_type='direct'
 )
 
-queue_name = result.method.queue
+queue_name = 'inform_router'
 
 result = channel.queue_declare(
-    queue='inform_router',
+    queue=queue_name,
     durable=True
 )
 
