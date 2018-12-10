@@ -1,42 +1,27 @@
-# import pika
+import pika
 
-# connection = pika.BlockingConnection(pika.ConnectionParameters('127.0.0.1'))
-# channel = connection.channel()
-
-# channel.exchange_declare(
-#     exchange='new_user',
-#     exchange_type='direct',
-# )
-
-# channel.basic_publish(
-#     exchange='new_user',
-#     routing_key='create',
-#     body='',
-#     properties=pika.BasicProperties(
-#         delivery_mode=2,
-#     )
-# )
-
-
-import utils
-
-broker = utils.Broker(host='127.0.0.1')
+connection = pika.BlockingConnection(pika.ConnectionParameters('127.0.0.1'))
+channel = connection.channel()
 
 exchange_name = 'new_user'
 
-broker.create_exchange(
-    name=exchange_name,
-    type='direct'
+channel.exchange_declare(
+    exchange=exchange_name,
+    exchange_type='direct',
 )
 
-broker.send_task(
+channel.basic_publish(
     exchange=exchange_name,
-    route='create'
+    routing_key='create',
+    body='',
+    properties=pika.BasicProperties(
+        delivery_mode=2,
+    )
 )
 
 print('Нужно завести нового пользователя')
 
-broker.connection.close()
+connection.close()
 
 '''
     python task.py
