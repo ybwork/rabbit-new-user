@@ -85,7 +85,7 @@ def callback(channel, method, properties, body):
 
         channel.basic_publish(
             exchange=exchange_name,
-            routing_key='add_user_to_group',
+            routing_key='add',
             body='',
             properties=pika.BasicProperties(
                 delivery_mode=2

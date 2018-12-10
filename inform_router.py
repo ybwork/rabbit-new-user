@@ -36,11 +36,10 @@ def callback(channel, method, properties, body):
             exchange_type='topic'
         )
 
-        event_for_inform_workers = 'informed_user_web'
         channel.basic_publish(
             exchange=exchange_name,
             routing_key='inform.new_user.all',
-            body=event_for_inform_workers,
+            body='',
             properties=pika.BasicProperties(
                 delivery_mode=2
             )

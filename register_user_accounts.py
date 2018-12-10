@@ -1,7 +1,4 @@
 import sys
-import time
-from datetime import datetime
-
 import pika
 
 connection = pika.BlockingConnection(pika.ConnectionParameters('127.0.0.1'))
@@ -28,13 +25,7 @@ channel.queue_bind(
 
 
 def callback(ch, method, properties, body):
-    # time.sleep(3)
-
     print('Пользователь зарегистрирован в {}'.format(sys.argv[1]))
-
-    # print(body.decode('utf-8'))
-    #
-    # print('Время: {}'.format(datetime.now().time()))
 
     exchange_name = 'base_router'
 

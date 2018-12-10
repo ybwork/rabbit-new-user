@@ -10,22 +10,23 @@ channel.exchange_declare(
     exchange_type='direct'
 )
 
-result = channel.queue_declare(
-    queue='add_user_to_group',
+queue_name = 'add'
+
+channel.queue_declare(
+    queue=queue_name,
     durable=True
 )
 
-queue_name = result.method.queue
 
 channel.queue_bind(
     exchange=exchange_name,
     queue=queue_name,
-    routing_key='add_user_to_group'
+    routing_key=queue_name,
 )
 
 
 def callback(channel, method, properties, body):
-    print('new user full register')
+    print('Пользователь добавлен в группу')
 
 
 channel.basic_consume(
